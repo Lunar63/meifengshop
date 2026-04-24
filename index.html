@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meifeng Shop | Procreate Brush Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sea-light: #f0f9ff;
+            --sea-medium: #e0f2fe;
+            --main-accent: #a5b4fc;
+            --text-accent: #6366f1;
+        }
+        body {
+            font-family: 'Kanit', sans-serif;
+            background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
+            color: #475569;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+        h1, h2, h3, .cute-font { font-family: 'Itim', cursive; }
+
+        /* --- Sea Animations Layer --- */
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
+        }
+        
+        .bubble {
+            position: absolute; 
+            background: rgba(255, 255, 255, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: rise var(--duration) ease-in infinite; 
+            bottom: -50px; 
+            opacity: 0;
+        }
+        @keyframes rise {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.7; }
+            80% { opacity: 0.4; }
+            100% { transform: translateY(-110vh) scale(1.3); opacity: 0; }
+        }
+
+        .sparkle {
+            position: absolute; 
+            background: white; 
+            border-radius: 50%;
+            box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.6);
+            animation: twinkle var(--duration) ease-in-out infinite; 
+            opacity: 0;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .drift-item {
+            position: absolute; 
+            opacity: 0.3;
+            animation: drift var(--duration) ease-in-out infinite; 
+            font-size: 1.5rem;
+            pointer-events: none;
+        }
+        @keyframes drift {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(40px, -60px) rotate(20deg); }
+            66% { transform: translate(-30px, 40px) rotate(-20deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        
+        .waves-container {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 120px; z-index: -1;
+        }
+        .wave {
+            position: absolute; bottom: 0; width: 200%; height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1000 100" xmlns="http://www.w3.org/2000/svg"><path d="M0,50 C150,20 350,80 500,50 C650,20 850,80 1000,50 L1000,100 L0,100 Z" fill="%23ffffff"/></svg>');
+            background-repeat: repeat-x; background-size: 1000px 100px;
+            animation: move-wave var(--duration) linear infinite;
+        }
+        @keyframes move-wave { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .cute-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .cute-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -15px rgba(125, 211, 252, 0.4); }
+        
+        .floating { animation: floating 4s ease-in-out infinite; }
+        @keyframes floating { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+
+        .img-fallback {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            display: flex; align-items: center; justify-content: center;
+            color: #7dd3fc; font-size: 0.7rem; text-align: center;
+            width: 100%; height: 100%;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="bg-animation" id="bg-elements"></div>
+    <div class="waves-container">
+        <div class="wave" style="--duration: 20s; opacity: 0.4;"></div>
+        <div class="wave" style="--duration: 30s; opacity: 0.2; bottom: 10px;"></div>
+    </div>
+
+    <div class="max-w-5xl mx-auto relative z-10">
+        
+        <!-- Header Section -->
+        <header class="cute-card w-full mb-8 p-10 text-center relative overflow-hidden shadow-sm">
+            <div class="relative z-10">
+                <div class="inline-block px-4 py-1 bg-sky-100 text-sky-600 rounded-full text-xs mb-4 font-medium tracking-wide italic">✨ Welcome to Meifeng Shop</div>
+                <h1 class="text-4xl md:text-6xl mb-3 text-sky-800 cute-font">Meifeng Shop บริการรับกดบรัช</h1>
+                <p class="text-lg text-sky-500 font-light italic">บริการรับกดบรัชจาก เถาเป่า (淘宝) เสี่ยวหงซู (小红书)</p>
+            </div>
+            <div class="absolute top-6 left-10 text-4xl floating opacity-30">🐳</div>
+            <div class="absolute bottom-6 right-10 text-4xl floating opacity-30" style="animation-delay: 2s">🐚</div>
+        </header>
+
+        <!-- Profile & Agreement -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+            <div class="lg:col-span-7">
+                <div class="cute-card p-10 flex flex-col items-center text-center h-full">
+                    <!-- โลโก้วงกลม -->
+                    <div class="w-44 h-44 rounded-full border-4 border-white shadow-lg mb-6 overflow-hidden bg-white floating flex items-center justify-center">
+                        <img src="image.jpg" alt="Meifeng Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'img-fallback\'>[Logo]</div>'">
+                    </div>
+                    <h2 class="text-3xl text-indigo-500 mb-1 cute-font">Meifeng Shop ✨</h2>
+                    <p class="text-xs text-slate-400 mb-8 tracking-[0.3em] font-light uppercase">@meifemgv2shop</p>
+                    
+                    <div class="bg-white/50 p-8 rounded-[2.5rem] text-left w-full relative shadow-inner">
+                        <div class="absolute -top-4 -right-4 text-3xl rotate-12">🌊</div>
+                        <h3 class="text-lg text-sky-600 mb-3 font-semibold flex items-center gap-2"><span>🕒</span> Open 09:00 - 23:30 👋</h3>
+                        <p class="text-[14px] leading-relaxed text-slate-600 font-light">
+                            สวัสดีค่ะ! ยินดีต้อนรับสู่ร้านรับกดบรัช <b>Meifeng Shop</b> นะคะ ทางร้านรับกดบรัชสำหรับ Procreate, Ps และ CSP ราคาน่ารัก และเป็นกันเองที่สุด ไม่ว่าจะเป็นแนวจีนๆ บรัชลูกไม้ต่างๆ ทางร้านก็รับช่วยหานะคะ
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- แก้ไขส่วนข้อความให้ต่อเป็นบรรทัดเดียวกัน -->
+            <div class="lg:col-span-5">
+                <div class="cute-card p-8 border-none h-full flex flex-col justify-center bg-amber-50/60 shadow-sm">
+                    <h2 class="text-xl mb-4 text-amber-700 cute-font flex items-center gap-2"><span>📢</span> ทำความเข้าใจก่อนฝากกด</h2>
+                    <div class="bg-white/80 p-6 rounded-3xl border-l-4 border-amber-400 shadow-sm">
+                        <p class="text-slate-500 text-[11px] leading-relaxed">
+                            บรัชที่ฝากทางร้านกดเป็นบรัชที่ <span class="font-bold">Creator ของคนจีน</span> เป็นคนออกแบบ <span class="text-amber-700 font-medium italic">*บรัชนี้ไม่ใช่บรัชของทางร้านแต่อย่างใด*</span> ทางร้านเป็นเพียงคนกลางในการฝากกดบรัชเท่านั้น สามารถใช้ในเชิงพาณิชย์ได้ หากไม่ได้เป็นองค์ประกอบหลักของภาพ แต่ทั้งนี้ทั้งนั้นขึ้นอยู่กับดุลพินิจของคุณลูกค้าด้วยค่ะ
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details & Primary Contact -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 text-slate-600">
+            <div class="cute-card p-8 shadow-sm">
+                <h2 class="text-2xl mb-6 text-sky-600 cute-font flex items-center gap-2"><span>🎀</span> รายละเอียดเพิ่มเติม</h2>
+                <div class="space-y-5 text-[14px] font-light leading-relaxed">
+                    <div class="flex items-start gap-2 italic">
+                        <span class="mt-1">☁️</span>
+                        <span>รับกดบรัชจากแอพ <span class="whitespace-nowrap font-medium text-sky-600">Taobao</span> และ <span class="whitespace-nowrap font-medium text-sky-600">Xiaohongshu</span></span>
+                    </div>
+                    <div class="flex items-start gap-2 italic">
+                        <span class="mt-1">☁️</span>
+                        <span>รับเปิดบรัชเริ่มต้นที่ <span class="font-bold text-indigo-500">10.-</span> เท่านั้น</span>
+                    </div>
+                    <div class="flex items-start gap-2 italic">
+                        <span class="mt-1">☁️</span>
+                        <span>รับหาบรัชประเภทต่างๆ ตามความต้องการของคุณลูกค้า</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cute-card p-8 border-dashed border-2 border-sky-200">
+                <h2 class="text-2xl mb-6 text-center text-indigo-600 cute-font">สอบถามได้น้า ~</h2>
+                <div class="grid grid-cols-2 gap-3 text-[11px]">
+                    <a href="https://lin.ee/z7zzGiw" target="_blank" class="flex items-center gap-2 p-3 bg-white border border-slate-100 rounded-2xl hover:scale-105 transition shadow-sm font-medium">💬 Line: @720qdkui</a>
+                    <a href="https://shop.line.me/@720qdkui" target="_blank" class="flex items-center gap-2 p-3 bg-white border border-slate-100 rounded-2xl hover:scale-105 transition shadow-sm font-medium">🛍️ Meifeng กดบรัช</a>
+                    <a href="https://www.facebook.com/" target="_blank" class="flex items-center gap-2 p-3 bg-white border border-slate-100 rounded-2xl hover:scale-105 transition shadow-sm font-medium">💙 Facebook</a>
+                    <a href="https://www.instagram.com/lilin3695_" target="_blank" class="flex items-center gap-2 p-3 bg-white border border-slate-100 rounded-2xl hover:scale-105 transition shadow-sm font-medium">📸 Instagram</a>
+                    <a href="https://www.tiktok.com/@lilinn6395" target="_blank" class="flex items-center gap-2 p-3 bg-white border border-slate-100 rounded-2xl hover:scale-105 transition shadow-sm col-span-2 justify-center font-medium">🎵 TikTok: LILIN6395</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="cute-card p-10 mb-8 text-center shadow-sm">
+            <h2 class="text-3xl text-sky-800 mb-2 cute-font">Brush Gallery ✨</h2>
+            <p class="text-sm text-slate-400 italic mb-10">ตัวอย่างบรัชในร้าน</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto mb-10">
+                <div class="group relative aspect-square rounded-[2.5rem] overflow-hidden border-4 border-white shadow-md bg-white">
+                    <img src="image1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'img-fallback\'>[Brush 1]</div>'">
+                </div>
+                <div class="group relative aspect-square rounded-[2.5rem] overflow-hidden border-4 border-white shadow-md bg-white">
+                    <img src="image2.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'img-fallback\'>[Brush 2]</div>'">
+                </div>
+                <div class="group relative aspect-square rounded-[2.5rem] overflow-hidden border-4 border-white shadow-md bg-white">
+                    <img src="image3.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'img-fallback\'>[Brush 3]</div>'">
+                </div>
+            </div>
+            <a href="https://shop.line.me/@720qdkui" target="_blank" class="inline-block px-12 py-4 bg-indigo-500 text-white rounded-full cute-font text-xl shadow-lg hover:bg-indigo-600 hover:scale-105 transition-all">ดูสินค้าเพิ่มเติม 🌊</a>
+        </div>
+
+        <!-- Backup Contact Section -->
+        <div class="cute-card p-8 mb-12 bg-white/40 border-2 border-dashed border-sky-300 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left text-sky-700">
+                <h2 class="text-2xl cute-font mb-1">☁️ ช่องทางการติดต่อสำรอง</h2>
+                <p class="text-xs opacity-60 italic">ในกรณีที่ช่องทางหลักติดต่อไม่ได้นะคะ</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-4 w-full md:w-auto text-slate-600">
+                <a href="https://lin.ee/PP73tkg" target="_blank" class="bg-white px-6 py-4 rounded-2xl flex items-center gap-3 border border-sky-100 hover:scale-105 transition shadow-sm min-w-[220px]">
+                    <span class="text-2xl">💬</span>
+                    <div class="flex flex-col text-left"><span class="text-[10px] text-sky-400 uppercase font-bold tracking-wider">Line สำรอง</span><span class="text-sm font-medium">@607bqupq</span></div>
+                </a>
+                <a href="https://x.com/meifengv2shop" target="_blank" class="bg-slate-900 text-white px-6 py-4 rounded-2xl flex items-center gap-3 hover:scale-105 transition shadow-sm min-w-[220px]">
+                    <span class="text-2xl">𝕏</span>
+                    <div class="flex flex-col text-left"><span class="text-[10px] text-slate-400 uppercase font-bold tracking-wider">X (Twitter)</span><span class="text-sm font-medium">@meifengv2shop</span></div>
+                </a>
+            </div>
+        </div>
+
+        <footer class="pb-16 text-center text-sky-700 text-[10px] tracking-[0.4em] uppercase opacity-40 font-medium">♡ Thank you for visiting Meifeng Shop ♡</footer>
+    </div>
+
+    <script>
+        const container = document.getElementById('bg-elements');
+        const driftIcons = ['🐠', '🐚', '✨', '⭐', '🐙', '🐢', '☁️', '🎐', '🐳', '🦐'];
+        
+        function createElements() {
+            for (let i = 0; i < 20; i++) {
+                const b = document.createElement('div');
+                b.className = 'bubble';
+                const s = Math.random() * 15 + 8;
+                b.style.width = s + 'px'; b.style.height = s + 'px';
+                b.style.left = Math.random() * 100 + 'vw'; 
+                b.style.setProperty('--duration', (Math.random() * 8 + 7) + 's');
+                b.style.animationDelay = (Math.random() * 12) + 's'; 
+                container.appendChild(b);
+            }
+            for (let i = 0; i < 30; i++) {
+                const sk = document.createElement('div');
+                sk.className = 'sparkle';
+                const sz = Math.random() * 5 + 2;
+                sk.style.width = sz + 'px'; sk.style.height = sz + 'px';
+                sk.style.left = Math.random() * 100 + 'vw'; 
+                sk.style.top = Math.random() * 100 + 'vh';
+                sk.style.setProperty('--duration', (Math.random() * 4 + 2) + 's');
+                container.appendChild(sk);
+            }
+            for (let i = 0; i < 15; i++) {
+                const d = document.createElement('div');
+                d.className = 'drift-item';
+                d.innerText = driftIcons[Math.floor(Math.random() * driftIcons.length)];
+                d.style.left = Math.random() * 100 + 'vw'; 
+                d.style.top = Math.random() * 100 + 'vh';
+                d.style.setProperty('--duration', (Math.random() * 15 + 10) + 's');
+                d.style.animationDelay = (Math.random() * 10) + 's'; 
+                container.appendChild(d);
+            }
+        }
+        window.onload = createElements;
+    </script>
+</body>
+</html>
